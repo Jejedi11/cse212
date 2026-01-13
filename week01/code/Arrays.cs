@@ -1,3 +1,7 @@
+using System.Net.Http.Headers;
+using Microsoft.VisualStudio.TestPlatform.CrossPlatEngine.Client;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 public static class Arrays
 {
     /// <summary>
@@ -8,12 +12,22 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // Initialize an array of doubles with {lenght} being it's size.
+        //
+        // Start a loop that runs {length} times.
+        // Multiply the {number} by the loop's incrementing variable.
+        // Add the product to the array of doubles.
+        // 
+        // Return the array.
 
-        return []; // replace this return statement with your own
+        double[] multiples = new double[length];
+        for (int i = 1; i <= length; i++)
+        {
+            double product = number * i;
+            multiples[i - 1] = product;
+        }
+
+        return multiples;
     }
 
     /// <summary>
@@ -25,9 +39,43 @@ public static class Arrays
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // OLD PLAN:
+        // create an index variable
+        // initialize a temporary new list
+        // Start a loop that runs of each item in {data}.
+        // Add {amount to each item's index}.
+        // If the new index is larger than the length of {data} subtract the length of {data} and add that item 
+        // to the new list at the new index.
+        // Else add the item to the new list at the new index.
+        // increment the index variable
+        // replace the old list with the new one.
+        // 
+        // The old plan did not work
+
+        // NEW PLAN:
+        // Make an index variable.
+        // Initialize a list to store the new data in.
+        // Using a loop, populate the new list with temporary data.
+        // Create a loop that runs for each item in {data}.
+        // Add the amount and index and use the modulus operator to wrap it to the proper index.
+        // Replace the item at the new index.
+        //increment the index.
+        //Clear and add data to the data list.
+
+
+        int index = 0;
+        List<int> rotatedData = new List<int>();
+        foreach (int item in data)
+        {
+            rotatedData.Add(0);
+        }
+        foreach (int item in data)
+        {
+            int newIndex = (index + amount) % data.Count;
+            rotatedData[newIndex] = item;
+            index++;
+        }
+        data.Clear();
+        data.AddRange(rotatedData);
     }
 }
