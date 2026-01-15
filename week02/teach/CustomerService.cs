@@ -11,24 +11,54 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: A user inputs zero or under for the maximum queue size.
+        // Expected Result: The max size should default to 10.
         Console.WriteLine("Test 1");
 
-        // Defect(s) Found: 
+        CustomerService customerService1 = new CustomerService(0);
+        CustomerService customerService2 = new CustomerService(-2);
+        if (customerService1._maxSize == 10 && customerService2._maxSize == 10)
+        {
+            Console.WriteLine("Passed");
+        }
+        else
+        {
+            Console.WriteLine("Failed");
+        }
+
+        // Defect(s) Found: None
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Customers are added to the queue until it is full.
+        // Expected Result: Customers will be added until and error message is displayed.
         Console.WriteLine("Test 2");
+
+        CustomerService customerService = new CustomerService(2);
+        for (int i = 0; i < 4; i++)
+        {
+            customerService.AddNewCustomer();
+        }
 
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
 
         // Add more Test Cases As Needed Below
+        
+        // Test 3
+        // Scenario: Customers are removed until the queue is empty.
+        // Expected Result: Customers are removed until an error message is displayed.
+        Console.WriteLine("Test 3");
+
+        
+        customerService.ServeCustomer();
+
+        // Defect(s) Found: 
+
+        Console.WriteLine("=================");
+
     }
 
     private readonly List<Customer> _queue = new();

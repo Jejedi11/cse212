@@ -6,13 +6,19 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 public class PriorityQueueTests
 {
     [TestMethod]
-    // Scenario: 
-    // Expected Result: 
+    // Scenario: Tests if the dequeue method returns the highest priority object
+    // Expected Result: Retunrs the Highest Priority object
     // Defect(s) Found: 
     public void TestPriorityQueue_1()
     {
         var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
+        priorityQueue.Enqueue("Teancum", 3);
+        priorityQueue.Enqueue("Nephi", 5);
+        priorityQueue.Enqueue("Alma", 4);
+        
+        Assert.AreEqual("Nephi", priorityQueue.Dequeue());
+        Assert.AreEqual("Alma", priorityQueue.Dequeue());
+        Assert.AreEqual("Teancum", priorityQueue.Dequeue());
     }
 
     [TestMethod]
@@ -22,7 +28,7 @@ public class PriorityQueueTests
     public void TestPriorityQueue_2()
     {
         var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
+        Assert.ThrowsException<InvalidOperationException>(priorityQueue.Dequeue);
     }
 
     // Add more test cases as needed below.
