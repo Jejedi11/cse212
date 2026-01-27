@@ -23,27 +23,31 @@ public static class SetsAndMaps
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
         var set = new HashSet<string>();
-        foreach(var word in words)
+        string pair;
+        foreach (var word in words)
         {
-            char[] wordArray = word.ToCharArray();
-            Array.Reverse(wordArray);
-            string wordFlipped = new string(wordArray);
-            if (words.Contains(wordFlipped))
+            if (word[0] == word[1])
             {
-                string pair = $"{word} & {wordFlipped}";
-                Console.WriteLine(pair);
-                Console.WriteLine(pair.Reverse());
-                if (!set.Contains(pair.Reverse()) || !set.Contains(pair))
+                continue;
+            }
+            
+            string reversed = $"{word[1]}{word[0]}";
+            if (words.Contains(reversed))
+            {
+                if (string.Compare(word, reversed) < 0)
                 {
-                    set.Add($"{word} & {wordFlipped}");
+                    pair = $"{word} & {reversed}";
+                    set.Add(pair);
+                }
+                else
+                {
+                    pair = $"{reversed} & {word}";
+                    set.Add(pair);
                 }
             }
         }
-        foreach (string pair in set)
-        {
-            Console.WriteLine(pair);
-        }
         string[] pairs = set.ToArray();
+
         return pairs;
     }
 
@@ -65,8 +69,17 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            
+            try
+            {
+                degrees[fields[3]]++;
+            }
+            catch
+            {
+                degrees[fields[3]] = 1;
+            }
+            
         }
-
         return degrees;
     }
 
@@ -89,7 +102,70 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        Dictionary<char, int> dict = new Dictionary<char, int>();
+        string space = " ";
+        string longerWord;
+        string shorterWord;
+        if (word1.Length > word2.Length)
+        {
+            longerWord = word1;
+            shorterWord = word2;
+        }
+        else
+        {
+            shorterWord = word1;
+            longerWord = word2;
+        }
+
+        Console.WriteLine("Building Dictionary");
+        for (int i = 0; i < shorterWord.Length; i++)
+        {
+            char currentChar = char.ToLower(shorterWord[i]);
+            if (currentChar != space[0])
+            {
+                if (dict.ContainsKey(currentChar))
+                {
+                    dict[currentChar]+= 1;
+                }
+                else
+                {
+                    dict[currentChar] = 1;
+                }
+                Console.WriteLine($"{currentChar} {dict[currentChar]}");
+            }
+            else
+            {
+                Console.WriteLine("Space");
+                continue;
+            }
+
+        }
+        Console.WriteLine("Comparing Strings");
+        foreach (char letter in longerWord)
+        {
+            char currentChar = char.ToLower(letter);
+            if (currentChar == space[0])
+            {
+                Console.WriteLine("Space");
+            }
+            else if (!dict.ContainsKey(currentChar))
+            {
+                Console.WriteLine("Invalid Character");
+                return false;
+            }
+            else
+            {
+                dict[currentChar] -= 1;
+                Console.WriteLine($"{currentChar} {dict[currentChar]}");
+                if (dict[currentChar] < 0)
+                {
+                    Console.WriteLine("Too many Characters left");
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
